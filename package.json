@@ -17,10 +17,14 @@
     "build": "npm run build:backend && npm run build:frontend",
     "build:backend": "cd backend && npm run build",
     "build:frontend": "cd frontend && npm run build",
-    "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install"
+    "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install",
+    "seed": "node supabase-seed.js",
+    "seed:help": "echo 'Run: npm run seed' to create initial admin user and sample data"
   },
   "devDependencies": {
-    "concurrently": "^8.2.2"
+    "concurrently": "^8.2.2",
+    "@supabase/supabase-js": "^2.38.4",
+    "dotenv": "^16.3.1"
   },
   "engines": {
     "node": ">=18.0.0"
