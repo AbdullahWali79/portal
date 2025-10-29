@@ -4,6 +4,15 @@ import AdminDashboard from './components/AdminDashboard'
 import AuthModal from './components/AuthModal'
 import './App.css'
 
+interface User {
+  id: string
+  email: string
+  first_name: string
+  last_name: string
+  role: 'admin' | 'company' | 'job_seeker'
+  phone?: string
+}
+
 interface Job {
   id: string
   title: string
@@ -29,7 +38,7 @@ interface Job {
 function App() {
   const [jobs, setJobs] = useState<Job[]>([])
   const [loading, setLoading] = useState(true)
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState<User | null>(null)
   const [showAdminDashboard, setShowAdminDashboard] = useState(false)
   const [showAuthModal, setShowAuthModal] = useState(false)
   const [newJob, setNewJob] = useState({
@@ -237,7 +246,7 @@ function App() {
       <AuthModal
         isOpen={showAuthModal}
         onClose={() => setShowAuthModal(false)}
-        onSuccess={(user) => {
+        onSuccess={(user: User) => {
           setUser(user)
           setShowAuthModal(false)
         }}

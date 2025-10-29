@@ -2,14 +2,94 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './AdminDashboard.css';
 
-const AdminDashboard = () => {
-  const [posts, setPosts] = useState([]);
-  const [companies, setCompanies] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [showCreateModal, setShowCreateModal] = useState(false);
-  const [showExtendModal, setShowExtendModal] = useState(false);
-  const [selectedPost, setSelectedPost] = useState(null);
-  const [toast, setToast] = useState(null);
+interface User {
+  id: string;
+  email: string;
+  first_name: string;
+  last_name: string;
+  role: string;
+  phone?: string;
+}
+
+interface Company {
+  id: string;
+  name: string;
+  description?: string;
+  website?: string;
+  industry?: string;
+  size?: string;
+  location?: string;
+  status: string;
+  admin_notes?: string;
+  created_at: string;
+  updated_at?: string;
+}
+
+interface Post {
+  id: string;
+  title: string;
+  description: string;
+  requirements?: string;
+  benefits?: string;
+  salary_min?: number;
+  salary_max?: number;
+  currency: string;
+  location: string;
+  remote_ok: boolean;
+  employment_type: string;
+  experience_level: string;
+  contact_email?: string;
+  contact_phone?: string;
+  image_url?: string;
+  visible: boolean;
+  is_active: boolean;
+  expires_at: string;
+  created_at: string;
+  updated_at?: string;
+  companies?: {
+    id: string;
+    name: string;
+    logo_url?: string;
+    location?: string;
+  };
+}
+
+interface CreateForm {
+  title: string;
+  description: string;
+  requirements: string;
+  benefits: string;
+  salary_min: string;
+  salary_max: string;
+  currency: string;
+  location: string;
+  remote_ok: boolean;
+  employment_type: string;
+  experience_level: string;
+  contact_email: string;
+  contact_phone: string;
+  image_url: string;
+  company_id: string;
+  daysLimit: number;
+}
+
+interface ExtendForm {
+  extraDays: number;
+}
+
+interface Toast {
+  message: string;
+  type: 'success' | 'error';
+}
+
+const AdminDashboard: React.FC = () => {
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [companies, setCompanies] = useState<Company[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [showCreateModal, setShowCreateModal] = useState<boolean>(false);
+  const [showExtendModal, setShowExtendModal] = useState<boolean>(false);
+  const [selectedPost, setSelectedPost] = useState<Post | null>(null);
+  const [toast, setToast] = useState<Toast | null>(null);
 
   // Form states
   const [createForm, setCreateForm] = useState({
